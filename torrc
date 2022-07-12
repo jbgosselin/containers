@@ -1,0 +1,9 @@
+SOCKSPort 0.0.0.0:9050
+Log notice stderr
+RunAsDaemon 0
+DataDirectory /tor/data
+ControlPort 0.0.0.0:9051
+# password => not-so-secret
+HashedControlPassword 16:B426C83E422D749060D4B1C158EABEF3BD0710F73591C3785578A67D77
+
+%include /tor/torrc.d/*.conf
