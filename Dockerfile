@@ -24,23 +24,23 @@ RUN tar xzf libevent-${LIBEVENT_VERSION}.tar.gz && cd libevent-${LIBEVENT_VERSIO
 ADD https://dist.torproject.org/tor-${TOR_VERSION}.tar.gz .
 RUN tar xzf tor-${TOR_VERSION}.tar.gz && cd tor-${TOR_VERSION} && \
     ./configure \
-    --prefix=/tor \
+    --prefix= \
     --enable-static-libevent --with-libevent-dir=/build/deps \
     --enable-static-zlib --with-zlib-dir=/build/deps \
     --disable-asciidoc --disable-manpage --disable-html-manual --disable-unittests \
     --disable-seccomp --disable-libscrypt --disable-lzma --disable-zstd --disable-systemd \
     --disable-module-relay --disable-module-dirauth \
-    && make && make install
+    && make && make DESTDIR=/build/out install-strip
 
-RUN mkdir /tor/data && mkdir /tor/torrc.d
+RUN mkdir -p /build/out/var/lib/tor /build/out/etc/tor/torrc.d
 
 # Build output image
 FROM gcr.io/distroless/base-debian11
 
-COPY --from=build /tor /tor
-COPY torrc /tor/etc/tor/torrc
+COPY --from=build /build/out /
+COPY torrc /etc/tor/torrc
 
-VOLUME /tor/data /tor/torrc.d
+VOLUME /var/lib/tor /etc/tor/torrc.d
 EXPOSE 9050/tcp 9051/tcp
 
-CMD ["/tor/bin/tor"]
+CMD ["/bin/tor"]

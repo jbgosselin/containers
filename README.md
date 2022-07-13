@@ -6,11 +6,11 @@ Simple tor client for connecting to tor-network via proxy or host onion services
 
 This image exposes these ports:
 - `9050/tcp` for SOCKS5 proxy
-- `9051/tcp` for control with `not-so-secret` as a password
+- `9051/tcp` for control
 
 This image has these volumes:
-- `/tor/data` used by tor to save generated keys
-- `/tor/torrc.d` can contains custom configuration if necessary, will accept any `*.conf` file
+- `/var/lib/tor` known as DataDirectory used by tor to save generated keys
+- `/etc/tor/torrc.d` can contains custom configuration if necessary, will accept any `*.conf` file
 
 This image is based on `gcr.io/distroless/base-debian11` so it does not contain a shell
-nor other softwares in order to reduce risks.
+nor other softwares except the ones built for tor in order to reduce risks.

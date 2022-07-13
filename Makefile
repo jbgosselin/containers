@@ -19,5 +19,5 @@ build:
 push:
 	    docker push ${IMAGEFULLNAME}:${tor_version}
 
-push_latest:
+push-latest:
 		docker push ${IMAGEFULLNAME}:latest
