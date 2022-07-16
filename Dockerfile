@@ -2,6 +2,7 @@ FROM debian:11 as build
 ARG TOR_VERSION
 ARG ZLIB_VERSION
 ARG LIBEVENT_VERSION
+ARG TINI_VERSION=0.19.0
 
 RUN apt-get update && apt-get install -y gcc make libssl-dev
 
@@ -32,7 +33,9 @@ RUN tar xzf tor-${TOR_VERSION}.tar.gz && cd tor-${TOR_VERSION} && \
     --disable-module-relay --disable-module-dirauth \
     && make && make DESTDIR=/build/out install-strip
 
-RUN mkdir -p /build/out/var/lib/tor /build/out/etc/tor/torrc.d
+ADD https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini /build/out/tini
+
+RUN mkdir -p /build/out/var/lib/tor /build/out/etc/tor/torrc.d && chmod +x /build/out/tini
 
 # Build output image
 FROM gcr.io/distroless/base-debian11
@@ -43,4 +46,4 @@ COPY torrc /etc/tor/torrc
 VOLUME /var/lib/tor /etc/tor/torrc.d
 EXPOSE 9050/tcp 9051/tcp
 
-CMD ["/bin/tor"]
+ENTRYPOINT ["/tini", "--", "/bin/tor"]
