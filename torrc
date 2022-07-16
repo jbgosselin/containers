@@ -1,4 +1,4 @@
 Log notice stderr
 RunAsDaemon 0
-DataDirectory /var/lib/tor
+DataDirectory /var/lib/tor/data
 %include /etc/tor/torrc.d/*.conf
