@@ -9,8 +9,11 @@ This image exposes these ports:
 - `9051/tcp` for control
 
 This image has these volumes:
-- `/var/lib/tor` known as DataDirectory used by tor to save generated keys
+- `/var/lib/tor` tor will create it's own `data` subdirectory with proper permission configured as DataDirectory
 - `/etc/tor/torrc.d` can contains custom configuration if necessary, will accept any `*.conf` file
 
+By default, this image will not listen on the control port.
+
 This image is based on `gcr.io/distroless/base-debian11` so it does not contain a shell
-nor other softwares except the ones built for tor in order to reduce risks.
+nor other softwares except the ones built for tor in order to reduce attack factor.
+It is built with statically compiled zlib and libevent.
