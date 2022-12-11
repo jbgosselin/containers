@@ -2,7 +2,7 @@
 tor_version=0.4.7.9
 tor_major=0.4
 tor_minor=0.4.7
-zlib_version=1.2.12
+zlib_version=1.2.13
 libevent_version=2.1.12-stable
 
 #vars

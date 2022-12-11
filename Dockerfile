@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y gcc make libssl-dev
 WORKDIR /build
 
 # ZLIB
-ADD https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz .
+ADD https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz .
 RUN tar xzf zlib-${ZLIB_VERSION}.tar.gz && cd zlib-${ZLIB_VERSION} && \
     ./configure --prefix=/build/deps --static && make && make install
 
@@ -46,4 +46,5 @@ COPY torrc /etc/tor/torrc
 VOLUME /var/lib/tor /etc/tor/torrc.d
 EXPOSE 9050/tcp 9051/tcp
 
-ENTRYPOINT ["/tini", "--", "/bin/tor"]
+ENTRYPOINT ["/tini", "--"]
+CMD ["/bin/tor"]
