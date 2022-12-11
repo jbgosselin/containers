@@ -46,5 +46,4 @@ COPY torrc /etc/tor/torrc
 VOLUME /var/lib/tor /etc/tor/torrc.d
 EXPOSE 9050/tcp 9051/tcp
 
-ENTRYPOINT ["/tini", "--"]
-CMD ["/bin/tor"]
+ENTRYPOINT ["/tini", "--", "/bin/tor"]
