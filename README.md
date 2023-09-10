@@ -2,7 +2,7 @@
 
 Simple tor client for connecting to tor-network via proxy or host onion services.
 
-`docker pull dennajort/tor-client:latest`
+`docker pull ghcr.io/jbgosselin/tor-client:latest`
 
 This image exposes these ports:
 - `9050/tcp` for SOCKS5 proxy
@@ -14,6 +14,6 @@ This image has these volumes:
 
 By default, this image will not listen on the control port.
 
-This image is based on `gcr.io/distroless/base-debian11` so it does not contain a shell
+This image is based on `gcr.io/distroless/base-debian12` so it does not contain a shell
 nor other softwares except the ones built for tor in order to reduce attack factor.
 It is built with statically compiled zlib and libevent.
