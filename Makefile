@@ -1,7 +1,7 @@
 #Dockerfile vars
-tor_version=0.4.7.14
+tor_version=0.4.8.7
 tor_major=0.4
-tor_minor=0.4.7
+tor_minor=0.4.8
 zlib_version=1.3
 libevent_version=2.1.12-stable
 
