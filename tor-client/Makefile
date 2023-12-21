@@ -1,5 +1,5 @@
 #Dockerfile vars
-tor_version=0.4.8.7
+tor_version=0.4.8.10
 tor_major=0.4
 tor_minor=0.4.8
 zlib_version=1.3
