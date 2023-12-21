@@ -11,3 +11,9 @@ limit risks in case of a breach.
 [More informations](tor-client)
 
 `docker pull ghcr.io/jbgosselin/tor-client:latest`
+
+## bitcoin-core
+
+[More informations](bitcoin-core)
+
+`docker pull ghcr.io/jbgosselin/bitcoin-core:latest`
