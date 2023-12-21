@@ -14,7 +14,6 @@ IMAGEFULLNAME=${REPO}/${IMAGENAME}
 
 build-amd64:
 	docker build --pull \
-		--file Containerfile \
 		--platform linux/amd64 \
 		--build-arg TOR_VERSION=${tor_version} \
 		--build-arg ZLIB_VERSION=${zlib_version} \
@@ -23,7 +22,6 @@ build-amd64:
 
 build-arm64v8:
 	docker build --pull \
-		--file Containerfile \
 		--platform linux/arm64/v8 \
 		--build-arg TOR_VERSION=${tor_version} \
 		--build-arg ZLIB_VERSION=${zlib_version} \
