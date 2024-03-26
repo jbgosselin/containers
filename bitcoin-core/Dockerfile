@@ -28,7 +28,6 @@ RUN mkdir -p /build/out/var/lib/bitcoin
 
 # Build output image
 FROM gcr.io/distroless/base-debian12
-LABEL org.opencontainers.image.source="https://github.com/jbgosselin/containers"
 
 COPY --from=build /build/out /
 
