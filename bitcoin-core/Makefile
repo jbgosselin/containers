@@ -1,5 +1,5 @@
 #Dockerfile vars
-bitcoin_version=26.0
+bitcoin_version=26.1
 
 #vars
 IMAGENAME=bitcoin-core
@@ -9,48 +9,24 @@ IMAGEAUTHORS=https://github.com/jbgosselin
 IMAGESOURCE=https://github.com/jbgosselin/containers/tree/main/bitcoin-core
 IMAGEDOC=https://github.com/jbgosselin/containers/tree/main/bitcoin-core/README.md
 
-.PHONY: build-amd64 build-arm64v8 push-amd64 push-arm64v8 push-version push-latest
+.PHONY: build push-version push-latest
 
-build-amd64:
-	docker build --pull \
-		--platform=linux/amd64 \
+build:
+	docker buildx build --pull \
+		--platform=linux/arm64,linux/amd64 \
+		--output=type=image \
 		--build-arg "BITCOIN_VERSION=${bitcoin_version}" \
-		--build-arg "BITCOIN_BUILD_HOST=x86_64-pc-linux-gnu" \
 		--label "org.opencontainers.image.authors=${IMAGEAUTHORS}" \
 		--label "org.opencontainers.image.source=${IMAGESOURCE}" \
 		--label "org.opencontainers.image.documentation=${IMAGEDOC}" \
-		--tag "${IMAGEFULLNAME}:${bitcoin_version}-amd64" .
-
-build-arm64v8:
-	docker build --pull \
-		--platform=linux/arm64/v8 \
-		--build-arg "BITCOIN_VERSION=${bitcoin_version}" \
-		--build-arg "BITCOIN_BUILD_HOST=aarch64-linux-gnu" \
-		--label "org.opencontainers.image.authors=${IMAGEAUTHORS}" \
-		--label "org.opencontainers.image.source=${IMAGESOURCE}" \
-		--label "org.opencontainers.image.documentation=${IMAGEDOC}" \
-		--tag "${IMAGEFULLNAME}:${bitcoin_version}-arm64v8" .
-
-build-all: build-amd64 build-arm64v8
-
-push-amd64:
-	docker push "${IMAGEFULLNAME}:${bitcoin_version}-amd64"
-
-push-arm64v8:
-	docker push "${IMAGEFULLNAME}:${bitcoin_version}-arm64v8"
+		--tag "${IMAGEFULLNAME}:${bitcoin_version}" \
+		--tag "${IMAGEFULLNAME}:latest" \
+		.
 
 push-version:
-	docker manifest create \
-		"${IMAGEFULLNAME}:${bitcoin_version}" \
-		"${IMAGEFULLNAME}:${bitcoin_version}-amd64" \
-		"${IMAGEFULLNAME}:${bitcoin_version}-arm64v8"
-	docker manifest push --purge "${IMAGEFULLNAME}:${bitcoin_version}"
+	docker push "${IMAGEFULLNAME}:${bitcoin_version}"
 
 push-latest:
-	docker manifest create \
-		"${IMAGEFULLNAME}:latest" \
-		"${IMAGEFULLNAME}:${bitcoin_version}-amd64" \
-		"${IMAGEFULLNAME}:${bitcoin_version}-arm64v8"
-	docker manifest push --purge "${IMAGEFULLNAME}:latest"
+	docker push "${IMAGEFULLNAME}:latest"
 
-push-all: push-amd64 push-arm64v8 push-version push-latest
+push-all: push-version push-latest

@@ -15,12 +15,11 @@ ARG BITCOIN_VERSION
 ADD https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCOIN_VERSION}.tar.gz .
 RUN tar xzf bitcoin-${BITCOIN_VERSION}.tar.gz
 
-ARG BITCOIN_BUILD_HOST
-RUN cd bitcoin-${BITCOIN_VERSION}/depends && make NO_QT=1 NO_QR=1 HOST=${BITCOIN_BUILD_HOST}
+RUN cd bitcoin-${BITCOIN_VERSION}/depends && make NO_QT=1 NO_QR=1
 
 RUN cd bitcoin-${BITCOIN_VERSION} && \
     ./autogen.sh && \
-    CONFIG_SITE=$PWD/depends/${BITCOIN_BUILD_HOST}/share/config.site LDFLAGS="-static-libgcc -static-libstdc++" ./configure \
+    CONFIG_SITE=$PWD/depends/$(./depends/config.guess)/share/config.site LDFLAGS="-static-libgcc -static-libstdc++" ./configure \
     --prefix= --disable-man --with-gui=no --with-libs=no --disable-bench --disable-tests  \
     && make && make DESTDIR=/build/out install
 
