@@ -15,6 +15,7 @@ build:
 	docker buildx build --pull \
 		--platform=linux/arm64,linux/amd64 \
 		--output=type=image \
+		--provenance=false \
 		--build-arg "BITCOIN_VERSION=${bitcoin_version}" \
 		--label "org.opencontainers.image.authors=${IMAGEAUTHORS}" \
 		--label "org.opencontainers.image.source=${IMAGESOURCE}" \
