@@ -1,5 +1,5 @@
 #Dockerfile vars
-gpodder2go_version=0.1.2
+gpodder2go_version=0.2.0
 
 #vars
 IMAGENAME=gpodder2go
