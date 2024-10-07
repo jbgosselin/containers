@@ -8,17 +8,18 @@ ARG TINI_VERSION=0.19.0
 ADD https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static-${TARGETARCH} /build/out/tini
 RUN chmod +x /build/out/tini
 
-RUN apt-get update && apt-get install -y build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 curl bison flex
+RUN apt-get update && apt-get install -y build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 curl bison flex cmake
 
 # BITCOIN-CORE
 ARG BITCOIN_VERSION
 ADD https://bitcoincore.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCOIN_VERSION}.tar.gz .
 RUN tar xzf bitcoin-${BITCOIN_VERSION}.tar.gz
 
-RUN cd bitcoin-${BITCOIN_VERSION}/depends && make NO_QT=1 NO_QR=1
+WORKDIR bitcoin-${BITCOIN_VERSION}
 
-RUN cd bitcoin-${BITCOIN_VERSION} && \
-    ./autogen.sh && \
+RUN make -C depends NO_QT=1 NO_QR=1
+
+RUN ./autogen.sh && \
     CONFIG_SITE=$PWD/depends/$(./depends/config.guess)/share/config.site LDFLAGS="-static-libgcc -static-libstdc++" ./configure \
     --prefix= --disable-man --with-gui=no --with-libs=no --disable-bench --disable-tests  \
     && make && make DESTDIR=/build/out install

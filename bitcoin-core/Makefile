@@ -1,5 +1,5 @@
 #Dockerfile vars
-bitcoin_version=27.1
+bitcoin_version=28.0
 
 #vars
 IMAGENAME=bitcoin-core
