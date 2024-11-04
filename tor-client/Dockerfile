@@ -1,4 +1,4 @@
-FROM docker.io/debian:12 as build
+FROM docker.io/debian:12 AS build
 
 RUN apt-get update && apt-get install -y gcc make libssl-dev
 

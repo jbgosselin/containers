@@ -1,5 +1,5 @@
 # entrypoint
-FROM docker.io/golang:1.22-bookworm as build-entrypoint
+FROM docker.io/golang:1.22-bookworm AS build-entrypoint
 
 WORKDIR /build
 COPY entrypoint.go ./

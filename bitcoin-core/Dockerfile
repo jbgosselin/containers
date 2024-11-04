@@ -1,4 +1,4 @@
-FROM docker.io/debian:12 as build
+FROM docker.io/debian:12 AS build
 
 WORKDIR /build
 
